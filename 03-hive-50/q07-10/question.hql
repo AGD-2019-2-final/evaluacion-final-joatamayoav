@@ -2,8 +2,8 @@
 -- Pregunta
 -- ===========================================================================
 --
--- Escriba una consulta que retorne para cada valor único de la columna `t0.c2`, 
--- los valores correspondientes de la columna `t0.c1`. 
+-- Escriba una consulta que retorne unicamente la columna t0.c5 con sus 
+-- elementos en mayuscula.
 --
 -- Escriba el resultado a la carpeta `output` de directorio de trabajo.
 --
@@ -39,5 +39,11 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' COLLECTION ITEMS TERMINATED BY ':'
+STORED AS TEXTFILE
 
+SELECT c2, collect_list(c1)
+FROM tbl0 
+GROUP BY c2;
 

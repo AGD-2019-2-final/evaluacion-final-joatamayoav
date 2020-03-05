@@ -2,8 +2,8 @@
 -- Pregunta
 -- ===========================================================================
 --
--- Realice una consulta que compute la cantidad de veces que aparece cada valor 
--- de la columna `t0.c5`  por año.
+-- Escriba una consulta que retorne unicamente la columna t0.c5 con sus 
+-- elementos en mayuscula.
 --
 -- Escriba el resultado a la carpeta `output` de directorio de trabajo.
 --
@@ -39,4 +39,10 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
 
+SELECT YEAR(c4) AS ANO, k, COUNT(*)
+FROM tbl0 LATERAL VIEW explode(c5) et AS k
+GROUP BY YEAR(c4), k;

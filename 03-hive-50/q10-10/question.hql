@@ -2,9 +2,8 @@
 -- Pregunta
 -- ===========================================================================
 --
--- Escriba una consulta que calcule la cantidad de registros por clave de la 
--- columna 3. En otras palabras, cuántos registros hay que tengan la clave 
--- `aaa`?
+-- Escriba una consulta que retorne la primera columna, la cantidad de 
+-- elementos en la columna 2 y la cantidad de elementos en la columna 3
 --
 -- Escriba el resultado a la carpeta `output` de directorio de trabajo.
 --
@@ -23,4 +22,9 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+
+SELECT k, COUNT(*) FROM t0 LATERAL VIEW explode(c3) t0 as k,v GROUP BY k;
 

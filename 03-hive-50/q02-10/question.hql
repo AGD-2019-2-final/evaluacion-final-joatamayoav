@@ -11,3 +11,19 @@
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
 
+DROP TABLE IF EXISTS U;
+
+CREATE TABLE U (Letra STRING, Fecha DATE, Numero INT) 
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+TBLPROPERTIES ("skip.header.line.count"="0");
+
+LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE U;
+
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
+
+SELECT Letra, Fecha, Numero
+FROM U
+ORDER BY Letra ASC, Numero ASC, Fecha ASC;
+

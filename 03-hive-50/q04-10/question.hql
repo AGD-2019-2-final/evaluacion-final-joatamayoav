@@ -2,8 +2,8 @@
 -- Pregunta
 -- ===========================================================================
 --
--- Escriba una consulta que retorne los valores únicos de la columna `t0.c5` 
--- (ordenados). 
+-- Escriba una consulta que retorne unicamente la columna t0.c5 con sus 
+-- elementos en mayuscula.
 --
 -- Escriba el resultado a la carpeta `output` de directorio de trabajo.
 --
@@ -39,4 +39,10 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+STORED AS TEXTFILE
 
+SELECT k
+FROM tbl0 LATERAL VIEW explode(c5) et AS k
+GROUP BY k;

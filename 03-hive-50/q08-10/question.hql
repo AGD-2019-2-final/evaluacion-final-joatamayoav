@@ -2,9 +2,8 @@
 -- Pregunta
 -- ===========================================================================
 --
--- Escriba una consulta que para cada valor único de la columna `t0.c2,` 
--- calcule la suma de todos los valores asociados a las claves en la columna 
--- `t0.c6`.
+-- Escriba una consulta que retorne la columna `tbl0.c1` y el valor 
+-- correspondiente de la columna `tbl1.c4` para la columna `tbl0.c2`.
 --
 -- Escriba el resultado a la carpeta `output` de directorio de trabajo.
 --
@@ -40,5 +39,11 @@ LOAD DATA LOCAL INPATH 'tbl1.csv' INTO TABLE tbl1;
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+INSERT OVERWRITE LOCAL DIRECTORY 'output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+STORED AS TEXTFILE
 
-
+SELECT c2, sum(value)
+FROM tbl0
+LATERAL VIEW explode(c6) tbl0
+GROUP BY c2;
