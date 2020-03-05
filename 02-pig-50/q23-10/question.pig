@@ -4,15 +4,15 @@
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo equivalente a la siguiente consulta SQL.
+-- Escriba el código equivalente a la siguiente consulta SQL.
 -- 
---    SELECT 
+--    SELECT
 --        firstname,
---        color 
+--        color
 --    FROM 
 --        u 
 --    WHERE 
---        color REGEXP '[aeiou]$';
+--       color REGEXP '[aeiou]$';
 -- 
 -- Escriba el resultado a la carpeta `output` del directorio actual.
 -- 
@@ -28,4 +28,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE firstname, color;
+B = FILTER A BY color MATCHES '.*[aeiou]$';
 
+STORE B INTO 'output' USING PigStorage(','); 

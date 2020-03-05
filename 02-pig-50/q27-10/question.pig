@@ -4,8 +4,8 @@
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo equivalente a la siguiente consulta SQL.
--- 
+-- Escriba el código equivalente a la siguiente consulta SQL.
+--
 --    SELECT 
 --        firstname, 
 --        LOCATE('ia', firstname) 
@@ -15,7 +15,7 @@
 -- Escriba el resultado a la carpeta `output` del directorio actual.
 -- 
 fs -rm -f -r output;
---
+-- 
 u = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
         firstname:CHARARRAY, 
@@ -26,3 +26,6 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE INDEXOF(firstname, 'ia');
+
+STORE A INTO 'output'; 

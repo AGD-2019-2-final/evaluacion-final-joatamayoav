@@ -4,7 +4,7 @@
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo equivalente a la siguiente consulta SQL.
+-- Escriba el código equivalente a la siguiente consulta SQL.
 -- 
 --    SELECT 
 --        firstname 
@@ -16,7 +16,7 @@
 -- Escriba el resultado a la carpeta `output` del directorio actual.
 -- 
 fs -rm -f -r output;
---
+-- 
 u = LOAD 'data.csv' USING PigStorage(',') 
     AS (id:int, 
         firstname:CHARARRAY, 
@@ -27,3 +27,10 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE firstname,SUBSTRING(firstname,0,1);
+
+B = FOREACH A GENERATE ($0>'M'?firstname :'');
+
+C = FILTER B BY NOT ($0 MATCHES '');
+
+STORE C INTO 'output'; 

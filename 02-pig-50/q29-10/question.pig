@@ -4,7 +4,7 @@
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo en Pig para manipulaciÃ³n de fechas que genere la siguiente 
+-- Escriba el código en Pig para manipulación de fechas que genere la siguiente 
 -- salida.
 -- 
 --    1971-07-08,jul,07,7
@@ -40,3 +40,17 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE birthday, ToDate(birthday,'yyyy-MM-dd') as fecha;
+B = FOREACH A GENERATE birthday,
+		       LOWER(ToString(fecha,'MMM')) as MMM,
+	               ToString(fecha,'MM') as MM,ToString(fecha,'M') as M;
+C = FOREACH B GENERATE birthday,
+		       CASE MMM WHEN 'jan' THEN 'ene'
+         	       WHEN 'apr' THEN 'abr'
+                       WHEN 'aug' THEN 'ago'
+                       WHEN 'dec' THEN 'dic'
+                       ELSE MMM END,
+		       MM, 
+		       M;
+
+STORE C INTO 'output' USING PigStorage(','); 

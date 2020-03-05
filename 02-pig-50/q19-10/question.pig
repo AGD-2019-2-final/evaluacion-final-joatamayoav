@@ -4,7 +4,7 @@
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo equivalente a la siguiente consulta SQL.
+-- Escriba el código equivalente a la siguiente consulta SQL.
 -- 
 --    SELECT
 --        firstname,
@@ -28,3 +28,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --        
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE firstname, color;
+B = FILTER A BY color MATCHES '.*b.*';
+
+STORE B INTO 'output' USING PigStorage(','); 
