@@ -1,9 +1,4 @@
--- Pregunta
--- ===========================================================================
--- 
--- Para responder la pregunta use el archivo `data.csv`.
--- 
--- Genere una relaciÃ³n con el apellido y su longitud. Ordene por longitud y 
+-- Genere una relación con el apellido y su longitud. Ordene por longitud y 
 -- por apellido. Obtenga la siguiente salida.
 -- 
 --   Hamilton,8
@@ -26,3 +21,10 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE surname, SIZE(surname);
+
+B = ORDER A BY $1 DESC, $0;
+
+C = LIMIT B 5;
+
+STORE C INTO 'output' USING PigStorage(','); 

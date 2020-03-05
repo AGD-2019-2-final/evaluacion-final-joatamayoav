@@ -1,10 +1,10 @@
---
+-- 
 -- Pregunta
 -- ===========================================================================
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo equivalente a la siguiente consulta en SQL.
+-- Escriba el código equivalente a la siguiente consulta en SQL.
 -- 
 --    SELECT
 --        color
@@ -28,3 +28,7 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE color;
+B = FILTER A BY color  MATCHES '^[b|B].*';
+
+STORE B INTO 'output'; 

@@ -1,9 +1,10 @@
+-- 
 -- Pregunta
 -- ===========================================================================
 -- 
 -- Para responder la pregunta use el archivo `data.csv`.
 -- 
--- Escriba el cÃ³digo que genere la siguiente salida.
+-- Escriba el código que genere la siguiente salida.
 -- 
 --    Boyer,BOYER,boyer
 --    Coffey,COFFEY,coffey
@@ -38,3 +39,8 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+A = FOREACH u GENERATE surname, UPPER(surname), LOWER(surname);
+
+B = ORDER A BY $1 ASC;
+
+STORE B INTO 'output' USING PigStorage(','); 
